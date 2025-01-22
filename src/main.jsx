@@ -7,10 +7,12 @@ import StudentsTable from './components/StudentsTable';
 
 
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
   <NavBar3/>
   <StudentsTable/>
+ 
   
   </>,
 )
