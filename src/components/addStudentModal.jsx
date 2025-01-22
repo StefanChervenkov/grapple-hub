@@ -1,16 +1,29 @@
-import React, { useState } from "react";
 
-const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+import { useState } from "react";
+import { addNewStudent } from "../api/studentApi";
 
-    const handleSubmit = (e) => {
+const AddStudentModal = ({ isOpen, closeModal, onAddStudent }) => {
+    const [student, setStudent] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+    });
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newStudent = { firstName, lastName, email, phone };
-        onAddStudent(newStudent); // Passing data to the parent component
-        onClose(); // Closing the modal after submission
+        if (
+            !student.firstName ||
+            !student.lastName ||
+            !student.email ||
+            !student.phone
+        ) {
+            alert("Please fill out all fields");
+            return;
+        }
+        const result = await addNewStudent(student); // Call the addNewStudent function from the API
+        onAddStudent(result); // Pass the new student data to the parent component
+        closeModal(); // Closing the modal after submission
     };
 
     if (!isOpen) return null; // Don't render if modal is not open
@@ -24,8 +37,8 @@ const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
                         <label className="block text-sm font-medium text-gray-700">First Name</label>
                         <input
                             type="text"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            value={student.firstName}
+                            onChange={(e) => setStudent({ ...student, firstName: e.target.value })}
                             required
                             className="w-full p-2 border border-gray-300 rounded-md"
                         />
@@ -34,8 +47,8 @@ const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
                         <label className="block text-sm font-medium text-gray-700">Last Name</label>
                         <input
                             type="text"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            value={student.lastName}
+                            onChange={(e) => setStudent({ ...student, lastName: e.target.value })}
                             required
                             className="w-full p-2 border border-gray-300 rounded-md"
                         />
@@ -44,8 +57,8 @@ const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
                         <label className="block text-sm font-medium text-gray-700">Email</label>
                         <input
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={student.email}
+                            onChange={(e) => setStudent({ ...student, email: e.target.value })}
                             required
                             className="w-full p-2 border border-gray-300 rounded-md"
                         />
@@ -54,8 +67,8 @@ const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
                         <label className="block text-sm font-medium text-gray-700">Phone Number</label>
                         <input
                             type="text"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            value={student.phone}
+                            onChange={(e) => setStudent({ ...student, phone: e.target.value })}
                             required
                             className="w-full p-2 border border-gray-300 rounded-md"
                         />
@@ -63,7 +76,7 @@ const AddStudentModal = ({ isOpen, onClose, onAddStudent }) => {
                     <div className="flex justify-between">
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={() => closeModal()}
                             className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
                         >
                             Cancel

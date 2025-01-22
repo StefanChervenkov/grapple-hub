@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { deleteStudent, editStudent } from "../api/studentApi";
+import { deleteStudent, editStudent, addNewStudent } from "../api/studentApi";
 import Spinner from "./Spinner";
 import AddStudentModal from "./addStudentModal";
 
 const StudentsTable = () => {
     const [students, setStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const  [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
+    const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
+    const [sortState, setSortState] = useState({ firstName: 'asc', lastName: 'asc', email: 'asc' });
 
     useEffect(() => {
         fetch("http://localhost:3030/jsonstore/students")
@@ -23,11 +24,23 @@ const StudentsTable = () => {
     }, []);
 
     const handleAddStudent = (newStudent) => {
-        // Logic to add the new student (e.g., send to API)
-        console.log("Adding student:", newStudent);
 
         // Update students state with the new student
         setStudents((prevStudents) => [...prevStudents, newStudent]);
+
+
+    };
+
+    const handleFilterClick = (filterBy) => {
+        const sortOrder = sortState[filterBy] === 'asc' ? 'desc' : 'asc';
+        const sortedStudents = [...students].sort((a, b) => {
+            return sortOrder === 'asc'
+                ? a[filterBy].localeCompare(b[filterBy])
+                : b[filterBy].localeCompare(a[filterBy]);
+        });
+    
+        setStudents(sortedStudents);
+        setSortState({ ...sortState, [filterBy]: sortOrder });
     };
 
     return (
@@ -36,10 +49,10 @@ const StudentsTable = () => {
 
             {isModalOpen && (
                 <AddStudentModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onAddStudent={handleAddStudent}
-            />
+                    isOpen={isModalOpen}
+                    closeModal={() => setIsModalOpen(false)}
+                    onAddStudent={handleAddStudent}
+                />
             )}
 
             <div className="overflow-x-auto">
@@ -55,9 +68,78 @@ const StudentsTable = () => {
                 <table className="min-w-full bg-white rounded-lg shadow-md">
                     <thead className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 text-gray-900">
                         <tr>
-                            <th className="px-6 py-3 text-left text-sm font-medium">First Name</th>
-                            <th className="px-6 py-3 text-left text-sm font-medium">Last Name</th>
-                            <th className="px-6 py-3 text-left text-sm font-medium">Email</th>
+                            <th className="px-6 py-3 text-left text-sm font-medium">
+                                First Name
+                                <button
+                                    className="ml-2 text-gray-500 hover:text-gray-700"
+                                    title="Filter by First Name"
+                                    onClick={() => handleFilterClick('firstName')}
+                                >
+                                    {/* Funnel icon */}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 12v6a1 1 0 01-.553.894l-4 2A1 1 0 019 20v-8L3.293 6.707A1 1 0 013 6V4z"
+                                        />
+                                    </svg>
+                                </button>
+                            </th>
+                            <th className="px-6 py-3 text-left text-sm font-medium">
+                                Last Name
+                                <button
+                                    className="ml-2 text-gray-500 hover:text-gray-700"
+                                    title="Filter by Last Name"
+                                    onClick={() => handleFilterClick('lastName')}
+                                >
+                                    {/* Funnel icon */}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 12v6a1 1 0 01-.553.894l-4 2A1 1 0 019 20v-8L3.293 6.707A1 1 0 013 6V4z"
+                                        />
+                                    </svg>
+                                </button>
+                                </th>
+                            <th className="px-6 py-3 text-left text-sm font-medium">
+                                Email
+                                <button
+                                    className="ml-2 text-gray-500 hover:text-gray-700"
+                                    title="Filter by Email"
+                                    onClick={() => handleFilterClick('email')}
+                                >
+                                    {/* Funnel icon */}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 12v6a1 1 0 01-.553.894l-4 2A1 1 0 019 20v-8L3.293 6.707A1 1 0 013 6V4z"
+                                        />
+                                    </svg>
+                                </button>
+                                </th>
                             <th className="px-6 py-3 text-left text-sm font-medium">Phone Number</th>
                             <th className="px-6 py-3 text-left text-sm font-medium">Actions</th>
                         </tr>
@@ -65,7 +147,7 @@ const StudentsTable = () => {
                     <tbody className="divide-y divide-gray-200">
                         {students.map((student) => (
                             <tr
-                                key={student.id}
+                                key={student._id}
                                 className="hover:bg-gray-100 transition duration-200 ease-in-out"
                             >
                                 <td className="px-6 py-4 text-sm text-gray-700">{student.firstName}</td>
