@@ -6,6 +6,7 @@ import './index.css';
 import StudentsTable from './components/StudentsTable';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import WeeklyCalendar from './components/WeeklyCalendar';
 
 
 
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <StudentsTable/>
  <LoginForm />
  <RegisterForm />
+ <WeeklyCalendar />
   
   </>,
 )

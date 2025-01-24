@@ -6,7 +6,7 @@
 import { useState, useEffect } from "react";
 import { deleteStudent, editStudent } from "../api/studentApi";
 import Spinner from "./Spinner";
-import AddStudentModal from "./addStudentModal";
+import AddStudentModal from "./AddStudentModal";
 
 const StudentsTable = () => {
     const [students, setStudents] = useState([]);
