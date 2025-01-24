@@ -1,8 +1,3 @@
-
-//TODO: Pagination
-
-
-
 import { useState, useEffect } from "react";
 import { deleteStudent, editStudent } from "../api/studentApi";
 import Spinner from "./Spinner";
@@ -15,7 +10,6 @@ const StudentsTable = () => {
     const [sortState, setSortState] = useState({ firstName: 'asc', lastName: 'asc', email: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
-
 
     useEffect(() => {
         fetch("http://localhost:3030/jsonstore/students")
@@ -31,6 +25,7 @@ const StudentsTable = () => {
             });
     }, []);
 
+    // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentStudents = students.slice(indexOfFirstItem, indexOfLastItem);
@@ -42,11 +37,8 @@ const StudentsTable = () => {
     };
 
     const handleAddStudent = (newStudent) => {
-
         // Update students state with the new student
         setStudents((prevStudents) => [...prevStudents, newStudent]);
-
-
     };
 
     const handleFilterClick = (filterBy) => {
@@ -93,7 +85,6 @@ const StudentsTable = () => {
                                     title="Filter by First Name"
                                     onClick={() => handleFilterClick('firstName')}
                                 >
-                                    {/* Funnel icon */}
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-5 w-5"
@@ -117,7 +108,6 @@ const StudentsTable = () => {
                                     title="Filter by Last Name"
                                     onClick={() => handleFilterClick('lastName')}
                                 >
-                                    {/* Funnel icon */}
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-5 w-5"
@@ -141,7 +131,6 @@ const StudentsTable = () => {
                                     title="Filter by Email"
                                     onClick={() => handleFilterClick('email')}
                                 >
-                                    {/* Funnel icon */}
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-5 w-5"
@@ -163,7 +152,7 @@ const StudentsTable = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {students.map((student) => (
+                        {currentStudents.map((student) => (
                             <tr
                                 key={student._id}
                                 className="hover:bg-gray-100 transition duration-200 ease-in-out"
@@ -190,11 +179,36 @@ const StudentsTable = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {/* Pagination Controls */}
+                <div className="flex justify-center mt-4">
+                    <button
+                        className="px-4 py-2 mx-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Prev
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            className={`px-4 py-2 mx-1 text-sm font-medium ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"} rounded`}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        className="px-4 py-2 mx-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </>
     );
 };
 
 export default StudentsTable;
-
-
