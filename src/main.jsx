@@ -4,6 +4,8 @@ import NavBar3 from './components/NavBar3';
 
 import './index.css';
 import StudentsTable from './components/StudentsTable';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 
 
@@ -12,7 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <>
   <NavBar3/>
   <StudentsTable/>
- 
+ <LoginForm />
+ <RegisterForm />
   
   </>,
 )
