@@ -3,7 +3,7 @@ import {useState} from 'react';
 import FormWrapper from './FormWrapper';
 
 
-export const RegisterForm = () => {
+ const RegisterForm = () => {
     const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
 
     const handleChange = (e) => {

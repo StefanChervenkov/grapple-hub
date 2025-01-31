@@ -2,7 +2,7 @@ import  { useState } from 'react';
 import FormWrapper from './FormWrapper';    
 
 
-export const LoginForm = () => {
+ const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
 
     const handleChange = (e) => {
