@@ -9,7 +9,7 @@ const StudentsTablePaginated = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
     const [sortState, setSortState] = useState({ firstName: 'asc', lastName: 'asc', email: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [studentsPerPage, setStudentsPerPage] = useState(5);
 
     useEffect(() => {
         fetch("http://localhost:3030/jsonstore/students")
@@ -26,11 +26,11 @@ const StudentsTablePaginated = () => {
     }, []);
 
     // Pagination logic
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * studentsPerPage;
+    const indexOfFirstItem = indexOfLastItem - studentsPerPage;
     const currentStudents = students.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(students.length / itemsPerPage);
+    const totalPages = Math.ceil(students.length / studentsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -182,6 +182,30 @@ const StudentsTablePaginated = () => {
 
                 {/* Pagination Controls */}
                 <div className="flex justify-center mt-4">
+                    
+
+                    <div className="flex items-center bg-gray-800 text-white border border-gray-600 rounded-md overflow-hidden transition-all duration-200 hover:border-gray-400">
+                        <label
+                            htmlFor="studentsPerPage"
+                            className="px-4 py-2 bg-gray-700 text-white border-r border-gray-600 transition-all duration-200 hover:bg-gray-600"
+                        >
+                            Show
+                        </label>
+                        <select
+                            id="studentsPerPage"
+                            className="px-4 py-2 bg-gray-800 text-white w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-400 transition-all duration-200 hover:bg-gray-700"
+                            value={studentsPerPage}
+                            onChange={(e) => setStudentsPerPage(e.target.value)}
+                        >
+                            <option value="5">5 students per page</option>
+                            <option value="10">10 students per page</option>
+                            <option value="20">20 students per page</option>
+                            <option value="50">50 students per page</option>
+                        </select>
+                    </div>
+
+
+
                     <button
                         className="px-4 py-2 mx-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600"
                         onClick={() => handlePageChange(currentPage - 1)}
