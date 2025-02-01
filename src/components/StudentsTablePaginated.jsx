@@ -3,7 +3,7 @@ import { deleteStudent, editStudent } from "../api/studentApi";
 import Spinner from "./Spinner";
 import AddStudentModal from "./addStudentModal";
 
-const StudentsTable = () => {
+const StudentsTablePaginated = () => {
     const [students, setStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
@@ -211,4 +211,4 @@ const StudentsTable = () => {
     );
 };
 
-export default StudentsTable;
+export default StudentsTablePaginated;

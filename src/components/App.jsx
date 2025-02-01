@@ -1,15 +1,19 @@
 
+import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "../routes/AppRoutes";
-import NavBar3 from "./NavBar3";
+import NavBar from "./NavBar";
 
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
-        <NavBar3 />
+        <BrowserRouter>
+        
+        <NavBar />
         <div className="flex-grow">
             <AppRoutes />
         </div>
-        
+        </BrowserRouter>
+
 
     </div>
   );
