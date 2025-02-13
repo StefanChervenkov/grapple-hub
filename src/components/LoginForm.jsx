@@ -1,18 +1,46 @@
-import  { useState } from 'react';
-import FormWrapper from './FormWrapper';    
+import { useState } from 'react';
+import FormWrapper from './FormWrapper';
+import { post } from '../api/requestApi';
+import { useNavigate } from 'react-router-dom';
+import { setUserData } from '../api/util';
+
+//Error handling on the client for login form
+//TODO create custom hook for form handling
+//TODO persist auth state in local storage
+
+//TODO the above step can be done using context API so I can avoid prop drilling (createcontext())
 
 
- const LoginForm = () => {
+const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const url = '/users/login';
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login Data:', formData);
+        try {
+            const result =  await post(url, formData);
+            if (result) {
+                setUserData({
+                    accessToken: result.accessToken,
+                    email: result.email,
+                    userId: result._id
+                })
+            }
+            navigate('/');
+
+        }
+
+        catch (error) {
+            console.log('The error is:', error);
+        }
+
+
     };
 
     return (

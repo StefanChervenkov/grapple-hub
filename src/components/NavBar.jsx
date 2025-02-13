@@ -43,10 +43,10 @@ const NavBar = () => {
           <div className="hidden md:block">
 
             <a
-              href="/signup"
+              href="/logout"
               className="px-4 py-2 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 text-sm font-medium rounded-md text-white hover:from-gray-500 hover:to-gray-400 transition-all"
             >
-              Sign Up
+              Log out
             </a>
           </div>
 
@@ -109,10 +109,10 @@ const NavBar = () => {
         </div>
         <div className="px-2 pt-2 pb-3 sm:px-3">
           <a
-            href="/signup"
+            href="/logout"
             className="block px-3 py-2 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 text-base font-medium text-white rounded-md hover:from-gray-500 hover:to-gray-400"
           >
-            Sign Up
+            Log out
           </a>
         </div>
       </div>
