@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import FormWrapper from './FormWrapper';
 import { post } from '../api/requestApi';
 import { useNavigate } from 'react-router-dom';
-import { setUserData } from '../api/util';
+
 
 //Error handling on the client for login form
 

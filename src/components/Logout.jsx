@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { get } from '../api/requestApi';
-import { clearUserData } from '../api/util';
+
 
 
 
@@ -30,7 +30,7 @@ export default function Logout() {
         logoutUser();
 
 
-    }, []);
+    }, [logout, navigate]);
 
 
 
