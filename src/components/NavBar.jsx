@@ -1,6 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import UserNavigation from './userNavigation';
+import GuestNavigation from './guestNavigation';
 
 const NavBar = () => {
+  const { user } = useAuth();
+
+
   return (
     <nav className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,42 +19,10 @@ const NavBar = () => {
 
           </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex space-x-8">
-            <NavLink to="/" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
-              Home
-            </NavLink>
+          {/* Desktop Navigation */}
+          {user ? <UserNavigation /> : <GuestNavigation />}
 
-            <NavLink to="/classes" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
-              Classes
-            </NavLink>
-
-            <NavLink to="/students" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
-              Students
-            </NavLink>
-
-
-            <NavLink to="/login" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
-              Login
-            </NavLink>
-
-            <NavLink to="/register" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
-              Register
-            </NavLink>
-
-
-          </div>
-
-          {/* Call-to-Action Button */}
-          <div className="hidden md:block">
-
-            <a
-              href="/logout"
-              className="px-4 py-2 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 text-sm font-medium rounded-md text-white hover:from-gray-500 hover:to-gray-400 transition-all"
-            >
-              Log out
-            </a>
-          </div>
+          
 
           {/* Mobile Menu Button */}
           <div className="-mr-2 flex md:hidden">

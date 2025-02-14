@@ -1,10 +1,13 @@
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { get } from '../api/requestApi';
-import { clearUserData } from '../api/util';    
+import { clearUserData } from '../api/util';
 
 
-export default  function Logout() {
+
+export default function Logout() {
+    const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,11 +18,8 @@ export default  function Logout() {
             try {
                 const promise = await get(url);
                 if (promise.status == 204) {
-                    clearUserData();
+                    logout();
                     navigate('/');
-                } else {
-                    const data = await promise.json();
-                    throw new Error(data.message);
                 }
             }
             catch (error) {
@@ -32,7 +32,7 @@ export default  function Logout() {
 
     }, []);
 
-  
+
 
 
     return null;

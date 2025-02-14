@@ -14,35 +14,29 @@ async function request(method, url, data) {
     }
 
     const userData = getUserData();
+    
+    
 
     if (userData) {
         options.headers['X-Authorization'] = userData.accessToken;
     }
 
-    try {
-        const response = await fetch(host + url, options);
+    const response = await fetch(host + url, options);
 
-        if (!response.ok) {
-            const err = await response.json();
+    if (!response.ok) {
+        const err = await response.json();
 
-            if (response.status == 403 && err.message == 'Invalid access token') {
-                clearUserData();
-            }
-
-            throw new Error(err.message);
+        if (response.status == 403 && err.message == 'Invalid access token') {
+            clearUserData();
         }
 
-        if (response.status == 204) {
-            return response;
-        } else {
-            return response.json();
-        }
+        throw new Error(err.message);
+    }
 
-
-    } catch (err) {
-        // TODO use error reporting technique as described in exam requirements
-        //alert(err.message);
-        throw err;
+    if (response.status == 204) {
+        return response;
+    } else {
+        return response.json();
     }
 }
 
