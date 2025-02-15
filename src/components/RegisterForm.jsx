@@ -1,19 +1,39 @@
-import {useState} from 'react';
-
+import {useState, useContext} from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import FormWrapper from './FormWrapper';
+import { post } from '../api/requestApi';
+
+
+
+//TODO Add error handling for registration form
+//TODO Add a password confirmation field
 
 
  const RegisterForm = () => {
+    const {login} = useContext(AuthContext);
     const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
+    const url = '/users/register';
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Register Data:', formData);
+        try {
+            const result = await post(url, formData);
+            if (result) {
+                login(result); //Updates context and localStorage
+            }
+            navigate('/');
+            
+        } catch (error) {
+            console.log('The error is:', error);
+            
+        }
     };
 
     return (
