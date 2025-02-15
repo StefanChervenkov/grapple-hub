@@ -1,17 +1,15 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import FormWrapper from './FormWrapper';
 import { post } from '../api/requestApi';
 import { useNavigate } from 'react-router-dom';
-
-
-//Error handling on the client for login form
-
+import FormWrapper from './FormWrapper';
+import ErrorMessage from './ErrorMessage';
 
 
 const LoginForm = () => {
-    const {login} = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [error, setError] = useState(null);
     const url = '/users/login';
     const navigate = useNavigate();
 
@@ -23,24 +21,31 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result =  await post(url, formData);
+            if (!formData.email || !formData.password) {
+                setError('Please fill out all fields');
+                return;
+            }
+            const result = await post(url, formData);
+
             if (result) {
                 login(result); //Updates context and localStorage
-                
+
             }
             navigate('/');
 
         }
 
         catch (error) {
-            console.log('The error is:', error);
+            setError(error.message);
         }
 
 
     };
 
     return (
+
         <FormWrapper title="Login">
+            {error && <ErrorMessage message={error} />}
             <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -80,6 +85,7 @@ const LoginForm = () => {
                 </button>
             </form>
         </FormWrapper>
+
     );
 };
 

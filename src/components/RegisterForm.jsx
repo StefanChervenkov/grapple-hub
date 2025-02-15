@@ -1,8 +1,9 @@
 import {useState, useContext} from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import FormWrapper from './FormWrapper';
 import { post } from '../api/requestApi';
+import FormWrapper from './FormWrapper';
+import ErrorMessage from './ErrorMessage';
 
 
 
@@ -11,9 +12,10 @@ import { post } from '../api/requestApi';
 
 
  const RegisterForm = () => {
-    const {login} = useContext(AuthContext);
-    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
-    const url = '/users/register';
+     const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
+     const [error, setError] = useState(null);
+     const {login} = useContext(AuthContext);
+     const url = '/users/register';
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -23,6 +25,16 @@ import { post } from '../api/requestApi';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return; 
+        }
+        if (Object.values(formData).some((field) => field === '')) {
+            setError('Please fill out all fields');
+            return;
+            
+        }
+
         try {
             const result = await post(url, formData);
             if (result) {
@@ -31,13 +43,14 @@ import { post } from '../api/requestApi';
             navigate('/');
             
         } catch (error) {
-            console.log('The error is:', error);
+            setError(error.message);
             
         }
     };
 
     return (
         <FormWrapper title="Register">
+            {error && <ErrorMessage message={error} />}
             <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
@@ -51,7 +64,7 @@ import { post } from '../api/requestApi';
                         placeholder="Enter your first name"
                         value={formData.firstName}
                         onChange={handleChange}
-                        required
+                        
                     />
                 </div>
                 <div>
@@ -66,7 +79,7 @@ import { post } from '../api/requestApi';
                         placeholder="Enter your last name"
                         value={formData.lastName}
                         onChange={handleChange}
-                        required
+                        
                     />
                 </div>
                 <div>
