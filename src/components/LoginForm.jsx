@@ -28,6 +28,7 @@ const LoginForm = () => {
             const result = await post(url, formData);
 
             if (result) {
+                console.log(result);
                 login(result); //Updates context and localStorage
 
             }

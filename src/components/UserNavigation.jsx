@@ -14,6 +14,10 @@ export default function UserNavigation() {
         <NavLink to="/students" className="text-sm font-medium text-white hover:text-gray-300">
           Students
         </NavLink>
+
+        <NavLink to="/events" className="text-sm font-medium text-white hover:text-gray-300">
+          Events
+        </NavLink>
   
         <NavLink to="/logout" className="bg-gray-600 text-sm font-medium rounded-md text-white hover:bg-gray-500">
           Log out
