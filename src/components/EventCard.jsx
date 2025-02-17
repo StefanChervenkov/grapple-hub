@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function EventCard({ event, user }) {
   const isOwner = user && user._id === event._ownerId;
   const isLoggedIn = !!user; // Checks if user exists
@@ -26,9 +28,11 @@ export default function EventCard({ event, user }) {
 
         {isOwner && (
           <>
-            <button className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-white font-medium py-1.5 text-sm rounded-lg transition">
-              Edit
-            </button>
+            <Link to={`/events/${event._id}/edit`} className="flex-1">
+              <button className="w-full bg-yellow-500 hover:bg-yellow-400 text-white font-medium py-1.5 text-sm rounded-lg transition">
+                Edit
+              </button>
+            </Link>
             <button className="flex-1 bg-red-600 hover:bg-red-500 text-white font-medium py-1.5 text-sm rounded-lg transition">
               Delete
             </button>
