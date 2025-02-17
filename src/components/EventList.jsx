@@ -1,7 +1,20 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EventCard from './EventCard';
 
-export default function EventList({ events }) {
+
+export default function EventList() {
+  const [events, setEvents] = useState([]);
+  const url = 'http://localhost:3030/data/events';
+
+
+  useEffect(() => {
+    fetch(url)
+    .then(res => res.json())
+    .then(data => setEvents(data));
+
+  }, []);
+
   return (
     <div className="p-6">
       {/* Create Event Link */}
@@ -17,11 +30,11 @@ export default function EventList({ events }) {
       {/* Event Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map(event => (
-          <EventCard key={event.id} event={event} />
+          <EventCard key={event._id} event={event} />
         ))}
       </div>
-      
-     
+
+
     </div>
   );
 }

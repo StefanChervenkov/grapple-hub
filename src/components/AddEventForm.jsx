@@ -1,5 +1,7 @@
     
 import { useState } from "react";
+import { post } from "../api/requestApi";
+import { useNavigate } from "react-router-dom";
 
 const AddEvent = () => {
   const [formData, setFormData] = useState({
@@ -9,14 +11,21 @@ const AddEvent = () => {
     description: "",
   });
 
+  const url = "/data/movies";
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Event Data:", formData);
     // TODO: Add logic to send event data to backend or state
+    const result = await post(url, formData);
+    if (result.ok) {
+      navigate("/");
+    }
   };
 
   return (
