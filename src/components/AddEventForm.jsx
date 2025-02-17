@@ -1,7 +1,10 @@
-    
+
 import { useState } from "react";
 import { post } from "../api/requestApi";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
+
+
 
 const AddEvent = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +13,9 @@ const AddEvent = () => {
     location: "",
     description: "",
   });
+  const [errorMessage, setErrorMessage] = useState();
 
-  const url = "/data/movies";
+  const url = "/data/events";
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,12 +24,24 @@ const AddEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Event Data:", formData);
-    // TODO: Add logic to send event data to backend or state
-    const result = await post(url, formData);
-    if (result.ok) {
-      navigate("/");
+
+    if (Object.values(formData).some(field => field === '')) {
+      setErrorMessage('Please fill out all fields');
+      return;
     }
+
+    try {
+      const result = await post(url, formData);
+      
+      if (result) {
+        navigate("/events");
+      }
+
+    } catch (error) {
+     
+      setErrorMessage(error.message);
+    }
+
   };
 
   return (
@@ -33,6 +49,8 @@ const AddEvent = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Create New Event</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {errorMessage && <ErrorMessage message={errorMessage} />}
+
         {/* Title */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Event Title</label>
@@ -41,7 +59,7 @@ const AddEvent = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            required
+
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter event title"
           />
@@ -55,7 +73,7 @@ const AddEvent = () => {
             name="date"
             value={formData.date}
             onChange={handleChange}
-            required
+
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -68,7 +86,7 @@ const AddEvent = () => {
             name="location"
             value={formData.location}
             onChange={handleChange}
-            required
+
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter location"
           />
@@ -81,7 +99,6 @@ const AddEvent = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            required
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter a short description"
           ></textarea>

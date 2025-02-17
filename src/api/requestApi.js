@@ -30,6 +30,10 @@ async function request(method, url, data) {
             clearUserData();
         }
 
+        if (response.status == 400) {
+            throw new Error('400 Bad request. Service is not supported');
+        }
+
         throw new Error(err.message);
     }
 
