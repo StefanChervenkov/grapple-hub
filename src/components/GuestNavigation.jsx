@@ -7,6 +7,10 @@ export default function GuestNavigation() {
                 Home
             </NavLink>
 
+            <NavLink to="/events" className="text-sm font-medium text-white hover:text-gray-300">
+                Events
+            </NavLink>
+
             <NavLink to="/login" className="text-sm font-medium text-white hover:text-gray-300">
                 Login
             </NavLink>

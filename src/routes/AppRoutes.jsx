@@ -19,7 +19,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/classes" element={<PrivateRoute> <WeeklyCalendar/> </PrivateRoute>} />
-            <Route path="/events" element={<PrivateRoute> <EventList  /> </PrivateRoute> }/>
+            <Route path="/events" element={ <EventList  /> }/>
             <Route path="/add-event" element={<PrivateRoute> <AddEvent/></PrivateRoute> }/>
             <Route path="/students" element={<PrivateRoute> <StudentsTablePaginated /> </PrivateRoute> } />
             <Route path="/login" element={<LoginForm />}/>

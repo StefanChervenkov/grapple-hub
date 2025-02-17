@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EventCard from './EventCard';
+import { useAuth } from '../hooks/useAuth';
 
 
 export default function EventList() {
   const [events, setEvents] = useState([]);
+  const {user} = useAuth();
   const url = 'http://localhost:3030/data/events';
 
 
@@ -30,7 +32,7 @@ export default function EventList() {
       {/* Event Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map(event => (
-          <EventCard key={event._id} event={event} />
+          <EventCard key={event._id} event={event} user={user} />
         ))}
       </div>
 
