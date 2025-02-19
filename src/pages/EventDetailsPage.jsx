@@ -17,6 +17,7 @@ export default function EventDetailsPage() {
       try {
         const data = await get(`/data/events/${eventId}`);
         setEvent(data);
+        
       } catch (error) {
         console.error("Error fetching event:", error);
       } finally {
@@ -32,8 +33,8 @@ export default function EventDetailsPage() {
   return (
     <div className="max-w-3xl mx-auto bg-gray-800 text-white p-6 rounded-xl shadow-lg mt-6 space-y-6">
       {/* Event Image */}
-      {event.imageUrl && (
-        <img src={event.imageUrl} alt={event.title} className="rounded-lg w-full object-cover max-h-80" />
+      {event.eventImageUrl && (
+        <img src={event.eventImageUrl} alt={event.title} className="rounded-lg w-full object-cover max-h-80" />
       )}
 
       {/* Event Title */}
