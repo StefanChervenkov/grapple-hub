@@ -22,7 +22,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/classes" element={<PrivateRoute> <WeeklyCalendar/> </PrivateRoute>} />
-            <Route path="/events" element={ <EventList  /> }/>
+            <Route path="/events" element={  <EventList  /> }/>
             <Route path="/add-event" element={<PrivateRoute> <AddEvent/></PrivateRoute>}/>
             <Route path="events/:eventId/edit" element={<PrivateRoute> <EditEventForm/> </PrivateRoute>}/>
             <Route path="events/:eventId/details" element={<PrivateRoute> <EventDetailsPage/> </PrivateRoute>}/>

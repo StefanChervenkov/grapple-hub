@@ -1,8 +1,16 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import Spinner from './Spinner';
 
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  console.log("Loading:", loading);// Debugging
+
+  if (loading) {
+    return <Spinner />;
+  }
+
 
   return user ? children : <Navigate to="/login" />;
 };

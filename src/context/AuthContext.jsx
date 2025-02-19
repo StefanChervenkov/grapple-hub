@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { getUserData, setUserData, clearUserData } from "../api/util";
 
 
@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null); //Holds the authenticated user
+    const [loading, setLoading] = useState(true); //Holds the loading state of the app
 
     //Check if the user is already logged in by loading userdata from local storage
     useEffect(() => {
@@ -14,6 +15,8 @@ export function AuthProvider({ children }) {
         if (storedUser) {
             setUser(storedUser);
         }
+
+        setLoading(false);
     }, []);
 
     // Login function
@@ -30,7 +33,7 @@ export function AuthProvider({ children }) {
     
     
     return (
-        <AuthContext.Provider value={{user, login, logout}}>
+        <AuthContext.Provider value={{user, login, logout, loading}}>
             {children}
         </AuthContext.Provider>
     );
