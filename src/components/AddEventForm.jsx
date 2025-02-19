@@ -9,14 +9,24 @@ import ErrorMessage from "./ErrorMessage";
 const AddEvent = () => {
   const [formData, setFormData] = useState({
     title: "",
-    date: "",
+    startDate: "",
+    endDate: "",
+    startTime: "",
+    endTime: "",
     location: "",
     description: "",
   });
   const [errorMessage, setErrorMessage] = useState();
+  const navigate = useNavigate();
 
   const url = "/data/events";
-  const navigate = useNavigate();
+
+  const fieldLabels = {
+    title: "Event Title",
+    startDate: "Start Date",
+    endDate: "End Date",
+    location: "Location",
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,20 +35,29 @@ const AddEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (Object.values(formData).some(field => field === '')) {
-      setErrorMessage('Please fill out all fields');
+    const requiredFields = Object.keys(fieldLabels);
+    const emptyRequiredFields = requiredFields.filter(field => formData[field].trim() === '');
+
+
+    if (emptyRequiredFields.length > 0) {
+      const formattedFields = emptyRequiredFields.map(field => fieldLabels[field]).join(', ');
+      setErrorMessage(`Please fill out the following fields: ${formattedFields}`);
+      
+      // Scroll to the top of the page
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
+
     try {
       const result = await post(url, formData);
-      
+
       if (result) {
         navigate("/events");
       }
 
     } catch (error) {
-     
+
       setErrorMessage(error.message);
     }
 
@@ -65,15 +84,50 @@ const AddEvent = () => {
           />
         </div>
 
-        {/* Date */}
+        {/* Start Date */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">Event Date</label>
+          <label className="block text-gray-700 font-medium mb-1">Start Date</label>
           <input
             type="date"
-            name="date"
-            value={formData.date}
+            name="startDate"
+            value={formData.startDate}
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
+        {/* End Date */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Start Time */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Start Time</label>
+          <input
+            type="time"
+            name="startTime"
+            value={formData.startTime}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* End Time */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">End Time</label>
+          <input
+            type="time"
+            name="endTime"
+            value={formData.endTime}
+            onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
