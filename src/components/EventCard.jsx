@@ -38,9 +38,11 @@ export default function EventCard({ event, user, onDelete }) {
       {/* Buttons (Conditionally Rendered) */}
       <div className="flex gap-2 mt-auto">
         {isLoggedIn && (
-          <button className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-medium py-1.5 text-sm rounded-lg transition">
-            Apply
-          </button>
+          <Link to={`/events/${event._id}/details`} className="flex-1">
+            <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-1.5 text-sm rounded-lg transition">
+              Details
+            </button>
+          </Link>
         )}
 
         {isOwner && (
