@@ -17,6 +17,10 @@ export default function EventList() {
 
   }, []);
 
+  const handleDeleteEvent = (deletedId) => {
+    setEvents(events.filter(event => event._id !== deletedId));
+  };
+
   return (
     <div className="p-6">
       {/* Create Event Link */}
@@ -32,7 +36,7 @@ export default function EventList() {
       {/* Event Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map(event => (
-          <EventCard key={event._id} event={event} user={user} />
+          <EventCard key={event._id} event={event} user={user} onDelete={handleDeleteEvent} />
         ))}
       </div>
 

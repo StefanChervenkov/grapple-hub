@@ -1,8 +1,25 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import DeleteModal from "./DeleteEventModal";
+import { del } from "../api/requestApi";
 
-export default function EventCard({ event, user }) {
+export default function EventCard({ event, user, onDelete }) {
   const isOwner = user && user._id === event._ownerId;
   const isLoggedIn = !!user; // Checks if user exists
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await del(`/data/events/${event._id}`); //Sends a delete request to the server
+      onDelete(event._id); //Remove the event item from the UI
+
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert(`An error occurred while deleting the event. - ${error.message}`);
+    }
+
+
+  };
 
   return (
     <div className="bg-gray-800 text-white rounded-2xl shadow-lg p-5 flex flex-col space-y-4">
@@ -33,12 +50,25 @@ export default function EventCard({ event, user }) {
                 Edit
               </button>
             </Link>
-            <button className="flex-1 bg-red-600 hover:bg-red-500 text-white font-medium py-1.5 text-sm rounded-lg transition">
+            <button
+              onClick={() => { setIsModalOpen(true) }}
+              className="flex-1 bg-red-600 hover:bg-red-500 text-white font-medium py-1.5 text-sm rounded-lg transition"
+            >
               Delete
             </button>
           </>
         )}
+
+
       </div>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={() => { setIsModalOpen(false) }}
+        onDelete={handleDelete}
+      />
+
     </div>
   );
 }

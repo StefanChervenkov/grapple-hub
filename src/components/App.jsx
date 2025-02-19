@@ -20,3 +20,7 @@ const App = () => {
 }   // End of App component
 
 export default App;
+
+//TODO implement delete functionality for deleting events
+//TODO implement pagination for the event page. Use the server pagination functionality
+//TODO implement event details page
