@@ -34,7 +34,7 @@ export default function EventDetailsPage() {
     <div className="max-w-3xl mx-auto bg-gray-800 text-white p-6 rounded-xl shadow-lg mt-6 space-y-6">
       {/* Event Image */}
       {event.eventImageUrl && (
-        <img src={event.eventImageUrl} alt={event.title} className="rounded-lg w-full object-cover max-h-80" />
+        <img src={event.eventImageUrl} alt={event.title} className="rounded-lg w-full object-cover max-h-80 md:max-h-96 lg:max-h-128" style={{ objectFit: 'contain' }} />
       )}
 
       {/* Event Title */}

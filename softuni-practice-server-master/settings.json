@@ -437,6 +437,25 @@
                 "description": "adadads",
                 "_createdOn": 1739938732932,
                 "_id": "fa38b9b3-82db-49e1-b70f-11fc80d7015e"
+            },
+             "27ae1525-52c8-4d3e-8248-e23cc8f2081b": {
+                "_ownerId": "6f0af5aa-d784-4ef2-9325-45b929500b95",
+                "title": "Caio Terra Camp",
+                "startDate": "2025-02-28",
+                "endDate": "2025-03-02",
+                "startTime": "18:00",
+                "endTime": "15:00",
+                "location": "Sofia",
+                "description": "Seminar with Caio Terra",
+                "eventImageUrl": "https://fitsanjose.com/wp-content/uploads/2020/11/caio-terra-img.png",
+                "moreInfo": "Join us for an exclusive BJJ seminar with Caio Terra, where the 12-time world champion will share his expertise on the Half Guard—one of the most effective and versatile positions in Brazilian Jiu-Jitsu. Whether you're looking to refine your sweeps, improve your defensive structure, or develop a more dynamic guard game, this seminar is a must-attend for practitioners of all levels. With Caio’s renowned attention to detail and his “Technique Conquers All” philosophy, you’ll gain invaluable insights that will elevate your game. Don’t miss this opportunity to learn from one of the best in the sport!",
+                "category": "Seminar",
+                "organizer": "Twisted Jiui Jitsu",
+                "priceBGN": "200",
+                "capacity": "120",
+                "attendees": [],
+                "_createdOn": 1740029226043,
+                "_id": "27ae1525-52c8-4d3e-8248-e23cc8f2081b"
             }
         }
     },
