@@ -19,7 +19,7 @@ const AddEvent = () => {
     moreInfo: "",
     category: "",
     organizer: "",
-    price: "",
+    priceBGN: "",
     capacity: "",
     attendees: [],
 
@@ -168,7 +168,61 @@ const AddEvent = () => {
             <option value="Workshop">Workshop</option>
             <option value="Tournament">Tournament</option>
             <option value="Networking">Networking</option>
+            <option value="Seminar">Seminar</option>
           </select>
+        </div>
+
+        {/* Organizer */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Organizer</label>
+          <input
+            type="text"
+            name="organizer"
+            value={formData.organizer}
+            onChange={handleChange}
+
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter organizer name"
+          />
+        </div>
+
+        {/* Price */}
+        <div className="border border-gray-300 rounded-lg p-4">
+          <div className="flex items-center mt-4">
+            <label className="block text-gray-700 font-medium mb-1">Price BGN</label>
+            <input
+              type="number"
+              name="priceBGN"
+              value={formData.priceBGN}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter price in leva"
+            />
+          </div>
+          <div className="flex items-center mt-4">
+            <label className="block text-gray-700 font-medium mb-1 mr-4">Price EUR</label>
+            <input
+              type="number"
+              name="priceEUR"
+              value={(Number(formData.priceBGN) / 1.95).toFixed(2)}
+              disabled
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-400"
+            />
+          </div>
+        </div>
+
+        {/* Capacity */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Capacity</label>
+          <input
+            type="number"
+            name="capacity"
+            value={formData.capacity}
+            onChange={handleChange}
+
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter maximum number of attendees"
+          />
         </div>
 
 
