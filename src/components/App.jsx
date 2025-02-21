@@ -30,3 +30,9 @@ export default App;
   // If some fields are missing, display a message saying EVENT DETAILS INCOMPLETE
   // If some filds are missing, users will not be able to join the event and see the details
    
+// TODO -Connect to an external API to get the weather forecast for the event location
+//TODO - Display the weather forecast for the event location
+//TODO - Display a map with the event location
+//TODO - Display a list of attendees
+//TODO - Display a button to join the event and add the user to the list of attendees
+//TODO - Display a button to leave the event and remove the user from the list of attendees

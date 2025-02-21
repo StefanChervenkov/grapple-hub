@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { get } from "../api/requestApi"; 
+import { get } from "../api/requestApi";
 import DeleteModal from "../components/DeleteEventModal";
 import Spinner from "../components/Spinner";
 
@@ -10,14 +10,15 @@ export default function EventDetailsPage() {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {user} = useAuth(); 
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchEvent() {
       try {
         const data = await get(`/data/events/${eventId}`);
         setEvent(data);
-        
+        console.log("Event data:", data);
+
       } catch (error) {
         console.error("Error fetching event:", error);
       } finally {
@@ -27,7 +28,7 @@ export default function EventDetailsPage() {
     fetchEvent();
   }, [eventId]);
 
-  if (isLoading) return <Spinner/>;
+  if (isLoading) return <Spinner />;
   if (!event) return <p className="text-center text-red-500">Event not found</p>;
 
   return (
@@ -42,8 +43,9 @@ export default function EventDetailsPage() {
 
       {/* Date & Time */}
       <div className="text-gray-400 text-sm flex space-x-4">
-        <span>📅 {event.date} </span>
-        {event.time && <span>⏰ {event.time}</span>}
+        <span>📅 <strong>Start:</strong> {new Date(event.startDate).toLocaleDateString()} ⏰ {event.startTime} - <strong>End:</strong> {new Date(event.endDate).toLocaleDateString()} ⏰ {event.endTime}</span>
+
+
         {event.timezone && <span>🌍 {event.timezone}</span>}
       </div>
 
@@ -61,9 +63,7 @@ export default function EventDetailsPage() {
       {/* Category & Tags */}
       <div className="flex flex-wrap gap-2 mt-2">
         {event.category && <span className="bg-blue-600 px-3 py-1 rounded-full text-sm">{event.category}</span>}
-        {event.tags?.map(tag => (
-          <span key={tag} className="bg-gray-700 px-3 py-1 rounded-full text-sm">{tag}</span>
-        ))}
+
       </div>
 
       {/* Organizer */}
@@ -80,11 +80,20 @@ export default function EventDetailsPage() {
       )}
 
       {/* Price / Fee */}
-      {event.price ? (
-        <p className="text-gray-300"><strong>💰 Price:</strong> ${event.price}</p>
+      {event.priceBGN ? (
+        <p className="text-gray-300"><strong>💰 Price:</strong> {event.priceBGN} BGN</p>
       ) : (
         <p className="text-green-400"><strong>🎉 Free Event</strong></p>
       )}
+
+      {/* More Info */}
+      {event.moreInfo && (
+        <div className="text-gray-300">
+          <strong>ℹ️ More Info:</strong>
+          <p>{event.moreInfo}</p>
+        </div>
+      )}
+
 
       {/* Action Buttons */}
       <div className="flex space-x-3 mt-4">
@@ -97,7 +106,7 @@ export default function EventDetailsPage() {
         {user?.id === event.ownerId && (
           <>
             <Link
-              to={`/events/edit/${event.id}`}
+              to={`/events/${event._id}/edit/`}
               className="bg-yellow-500 hover:bg-yellow-400 text-white font-medium px-4 py-2 rounded-lg transition"
             >
               Edit
@@ -121,3 +130,5 @@ export default function EventDetailsPage() {
     </div>
   );
 }
+
+
