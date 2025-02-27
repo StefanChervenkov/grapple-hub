@@ -12,6 +12,8 @@ export default function EventDetailsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
 
+  const isOwner = user && user._id === event?._ownerId; 
+
   useEffect(() => {
     async function fetchEvent() {
       try {
@@ -103,7 +105,7 @@ export default function EventDetailsPage() {
           </button>
         )}
 
-        {user?.id === event.ownerId && (
+        {isOwner && (
           <>
             <Link
               to={`/events/${event._id}/edit/`}
