@@ -42,3 +42,17 @@ export function showErrNotification(errorMessage) {
     }, 3000);
 }
 
+export function checkEventCompleteness(event) {
+    const requiredFields = ['title', 'startDate', 'endDate', 'startTime', 'endTime', 'location', 'description', 'eventImageUrl', 'moreInfo', 'category', 'organizer', 'priceBGN', 'capacity'];
+
+    for (const field of requiredFields) {
+        if (!event[field] || event[field].trim() === '') {//
+            return false;
+        }
+
+
+    }
+    return true;
+
+
+}
