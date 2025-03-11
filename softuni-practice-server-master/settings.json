@@ -346,6 +346,25 @@
                 "attendees": [],
                 "_createdOn": 1740029226043,
                 "_id": "27ae1525-52c8-4d3e-8248-e23cc8f2081b"
+            },
+             "1adf825a-420b-43d8-8f1c-303b80edd4fc": {
+                "_ownerId": "6f0af5aa-d784-4ef2-9325-45b929500b95",
+                "title": "Incomplete test event",
+                "startDate": "2025-03-14",
+                "endDate": "2025-03-16",
+                "startTime": "07:00",
+                "endTime": "18:00",
+                "location": "London",
+                "description": "Incomplete event",
+                "eventImageUrl": "",
+                "moreInfo": "",
+                "category": "",
+                "organizer": "",
+                "priceBGN": "150",
+                "capacity": "",
+                "attendees": [],
+                "_createdOn": 1741587396657,
+                "_id": "1adf825a-420b-43d8-8f1c-303b80edd4fc"
             }
         }
     },

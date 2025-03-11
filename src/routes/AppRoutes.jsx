@@ -30,7 +30,7 @@ const AppRoutes = () => {
             <Route path="/students" element={<PrivateRoute> <StudentsTablePaginated /> </PrivateRoute>} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/logout" element={<PrivateRoute> <Logout />  </PrivateRoute>} />
+            <Route path="/logout" element={ <Logout />  } />
             <Route path="*" element={<HomePage />} />
 
         </Routes>

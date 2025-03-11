@@ -1,13 +1,13 @@
-
+// Desc: ApplyModal component to confirm application to an event
 
 const ApplyModal = ({ isOpen, onClose, onApply }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Confirm Application</h2>
-        <p>Would you like to join this event?</p>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 className="text-xl font-bold mb-4 text-black">Confirm Application</h2>
+        <p className="mb-4 text-black">Would you like to join this event?</p>
         <div className="mt-4 flex space-x-3">
           <button
             onClick={onApply}

@@ -1,25 +1,38 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { get } from "../api/requestApi";
+import { get, post } from "../api/requestApi";
 import DeleteModal from "../components/DeleteEventModal";
 import Spinner from "../components/Spinner";
+import ApplyModal from "../components/ApplyModal";
 
 export default function EventDetailsPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [currentApplication, setCurrentApplication] = useState(null);
   const { user } = useAuth();
 
-  const isOwner = user && user._id === event?._ownerId; 
+  const isOwner = user && user._id === event?._ownerId;
 
   useEffect(() => {
     async function fetchEvent() {
       try {
         const data = await get(`/data/events/${eventId}`);
         setEvent(data);
-        console.log("Event data:", data);
+
+        const eventApplications = await get(`/jsonstore/eventApplications`);
+        const eventApplication = Object.values(eventApplications).some(app => app.userId === user._id && app.eventId === eventId);
+       
+        if (eventApplication) {
+          setCurrentApplication(Object.values(eventApplications).find(app => app.userId === user._id && app.eventId === eventId));
+
+        }
+
+
+
 
       } catch (error) {
         console.error("Error fetching event:", error);
@@ -29,6 +42,30 @@ export default function EventDetailsPage() {
     }
     fetchEvent();
   }, [eventId]);
+
+  const handleApply = async () => {
+    try {
+      const currentApllication = {
+        userId: user._id,
+        email: user.email,
+        eventId: event._id,
+        confirmed: false
+      };
+
+      await post('/jsonstore/eventApplications', currentApllication);
+
+      setIsApplyModalOpen(false);
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setCurrentApplication(currentApllication);
+         
+      }, 2000);
+      
+    } catch (error) {
+      console.error("Error applying for event:", error);
+    }
+  };
 
   if (isLoading) return <Spinner />;
   if (!event) return <p className="text-center text-red-500">Event not found</p>;
@@ -46,8 +83,6 @@ export default function EventDetailsPage() {
       {/* Date & Time */}
       <div className="text-gray-400 text-sm flex space-x-4">
         <span>📅 <strong>Start:</strong> {new Date(event.startDate).toLocaleDateString()} ⏰ {event.startTime} - <strong>End:</strong> {new Date(event.endDate).toLocaleDateString()} ⏰ {event.endTime}</span>
-
-
         {event.timezone && <span>🌍 {event.timezone}</span>}
       </div>
 
@@ -65,7 +100,6 @@ export default function EventDetailsPage() {
       {/* Category & Tags */}
       <div className="flex flex-wrap gap-2 mt-2">
         {event.category && <span className="bg-blue-600 px-3 py-1 rounded-full text-sm">{event.category}</span>}
-
       </div>
 
       {/* Organizer */}
@@ -96,11 +130,21 @@ export default function EventDetailsPage() {
         </div>
       )}
 
+      {/* Application Status */}
+      {currentApplication && (
+        <div className="text-gray-300">
+          <strong>📝 Application Status:</strong>
+          <p>{currentApplication.confirmed ? "Approved" : "Pending Approval"}</p>
+        </div>
+      )}
 
       {/* Action Buttons */}
       <div className="flex space-x-3 mt-4">
-        {user && (
-          <button className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition">
+        {user && !currentApplication && (
+          <button
+            onClick={() => setIsApplyModalOpen(true)}
+            className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition"
+          >
             Apply
           </button>
         )}
@@ -123,6 +167,13 @@ export default function EventDetailsPage() {
         )}
       </div>
 
+      {/* Apply Confirmation Modal */}
+      <ApplyModal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        onApply={handleApply}
+      />
+
       {/* Delete Confirmation Modal */}
       <DeleteModal
         isOpen={isModalOpen}
@@ -132,5 +183,3 @@ export default function EventDetailsPage() {
     </div>
   );
 }
-
-
