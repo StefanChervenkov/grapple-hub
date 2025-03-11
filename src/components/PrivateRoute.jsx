@@ -4,13 +4,13 @@ import Spinner from './Spinner';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
+  console.log("User:", user);// Debugging
 
   console.log("Loading:", loading);// Debugging
 
   if (loading) {
-    return <Spinner />;
+    return <Spinner/>;
   }
-
 
   return user ? children : <Navigate to="/login" />;
 };

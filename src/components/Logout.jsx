@@ -7,19 +7,25 @@ import { get } from '../api/requestApi';
 
 
 export default function Logout() {
-    const { logout } = useContext(AuthContext);
+    const { logout, user } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!user) {
+            navigate('/');
+            return;
+        }
+        
         const logoutUser = async () => {
             const url = '/users/logout';
-
-
             try {
                 const promise = await get(url);
+
                 if (promise.status == 204) {
+
                     logout();
                     navigate('/');
+
                 }
             }
             catch (error) {
@@ -30,7 +36,7 @@ export default function Logout() {
         logoutUser();
 
 
-    }, [logout, navigate]);
+    }, []);
 
 
 
