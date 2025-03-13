@@ -46,8 +46,8 @@ export default function EventDetailsPage() {
   const handleApply = async () => {
     try {
       const currentApllication = {
+        ...user,
         userId: user._id,
-        email: user.email,
         eventId: event._id,
         confirmed: false
       };
@@ -163,6 +163,13 @@ export default function EventDetailsPage() {
             >
               Delete
             </button>
+
+            <Link
+              to={`/events/${event._id}/applications`}
+              className="bg-purple-600 hover:bg-purple-500 text-white font-medium px-4 py-2 rounded-lg transition"
+            >
+              Manage Applications
+            </Link>
           </>
         )}
       </div>

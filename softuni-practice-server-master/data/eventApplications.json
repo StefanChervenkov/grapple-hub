@@ -1,9 +1,22 @@
 {
-    "8726b4e8-1cca-4423-9820-e190f29ec3e8": {
-        "userId": "35c62d76-8152-4626-8712-eeb96381bea8",
+    "f07a36a0-d62a-4a87-8ae7-5b3a3729a889": {
         "email": "peter@abv.bg",
+        "firstName": "Peter",
+        "lastName": "Petrov",
+        "_id": "f07a36a0-d62a-4a87-8ae7-5b3a3729a889",
+        "accessToken": "3381ea30ad625fc8530b98092b120e65bbf123bb67742075a338abbabf23ebe7",
+        "userId": "35c62d76-8152-4626-8712-eeb96381bea8",
         "eventId": "27ae1525-52c8-4d3e-8248-e23cc8f2081b",
-        "confirmed": false,
-        "_id": "8726b4e8-1cca-4423-9820-e190f29ec3e8"
+        "confirmed": false
+    },
+    "f6bcbbcb-3ee5-41d1-b395-9083c8f2a607": {
+        "email": "george@abv.bg",
+        "firstName": "George",
+        "lastName": "Georgiev",
+        "_id": "f6bcbbcb-3ee5-41d1-b395-9083c8f2a607",
+        "accessToken": "3c9bbf29c9671ee8afa24b139856d2875f310626b168a39c5588aa8b6bfcfbbb",
+        "userId": "847ec027-f659-4086-8032-5173e2f9c93a",
+        "eventId": "27ae1525-52c8-4d3e-8248-e23cc8f2081b",
+        "confirmed": false
     }
 }
