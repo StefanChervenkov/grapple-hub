@@ -25,7 +25,7 @@ export default function EventDetailsPage() {
 
         const eventApplications = await get(`/jsonstore/eventApplications`);
         const eventApplication = Object.values(eventApplications).some(app => app.userId === user._id && app.eventId === eventId);
-       
+
         if (eventApplication) {
           setCurrentApplication(Object.values(eventApplications).find(app => app.userId === user._id && app.eventId === eventId));
 
@@ -59,9 +59,9 @@ export default function EventDetailsPage() {
       setTimeout(() => {
         setIsLoading(false);
         setCurrentApplication(currentApllication);
-         
+
       }, 2000);
-      
+
     } catch (error) {
       console.error("Error applying for event:", error);
     }
@@ -147,6 +147,18 @@ export default function EventDetailsPage() {
           >
             Apply
           </button>
+        )}
+
+        
+
+        {/* Button for forum page */}
+        {((currentApplication?.confirmed) || isOwner) && (
+          <Link
+            to={`/events/${event._id}/forum`}
+            className="bg-green-600 hover:bg-green-500 text-white font-medium px-4 py-2 rounded-lg transition"
+          >
+            Forum
+          </Link>
         )}
 
         {isOwner && (

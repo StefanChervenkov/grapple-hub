@@ -13,6 +13,7 @@ import EditEventForm from '../components/EditEventForm';
 import DeleteEventModal from '../components/DeleteEventModal';
 import EventDetailsPage from '../pages/EventDetailsPage';
 import EventApplicationsPage from '../pages/EventApplicationsPage';
+import EventForumPage from '../pages/EventForumPage';
 
 
 
@@ -28,11 +29,12 @@ const AppRoutes = () => {
             <Route path="events/:eventId/edit" element={<PrivateRoute> <EditEventForm /> </PrivateRoute>} />
             <Route path="events/:eventId/details" element={<PrivateRoute> <EventDetailsPage /> </PrivateRoute>} />
             <Route path="events/:eventId/applications" element={<PrivateRoute> <EventApplicationsPage /> </PrivateRoute>} />
+            <Route path="/events/:eventId/forum" element={<PrivateRoute> <EventForumPage />  </PrivateRoute>} />
             <Route path="/delete" element={<DeleteEventModal />} />
             <Route path="/students" element={<PrivateRoute> <StudentsTablePaginated /> </PrivateRoute>} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/logout" element={ <Logout />  } />
+            <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<HomePage />} />
 
         </Routes>
