@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CommentBox = ({ postComment }) => {
+const CommentBox = ({ postComment, currentUser }) => {
     const [comment, setComment] = useState("");
 
     const handlePostComment = () => {
@@ -15,7 +15,7 @@ const CommentBox = ({ postComment }) => {
     return (
         <div className="max-w-xl mx-auto mt-5 p-5 bg-white shadow-md rounded-lg mb-4">
             <div className="mb-4">
-                <p className="text-lg font-semibold text-gray-800">John Doe</p>
+                <p className="text-lg font-semibold text-gray-800">{`${currentUser.firstName} ${currentUser.lastName}`}</p>
             </div>
 
             <textarea

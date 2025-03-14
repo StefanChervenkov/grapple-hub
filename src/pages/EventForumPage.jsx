@@ -72,7 +72,7 @@ const EventForumPage = () => {
                 {isCommentBoxVisible ? "Hide Comment Box" : "+ Add Comment"}
             </button>
 
-           {isCommentBoxVisible && <CommentBox postComment={postComment} />}
+           {isCommentBoxVisible && <CommentBox postComment={postComment} currentUser={user} />}
 
             {comments.map((comment) => (
                 <Comment key={comment._id} comment={comment} />
