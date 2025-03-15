@@ -43,7 +43,9 @@ const EventForumPage = () => {
             lastName: user.lastName,
             comment: commentText,
             eventId,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            likes: [],
+            likesCount: 0
         };
 
         try {
@@ -52,7 +54,10 @@ const EventForumPage = () => {
             if (!data) {
                 throw new Error("Failed to post comment.");
             }
-            setComments([...comments, newComment]);
+
+            const updatedComments = Object.values(await get(`/jsonstore/comments`)).filter((comment) => comment.eventId === eventId);
+            setComments(updatedComments); 
+
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
@@ -75,7 +80,7 @@ const EventForumPage = () => {
            {isCommentBoxVisible && <CommentBox postComment={postComment} currentUser={user} />}
 
             {comments.map((comment) => (
-                <Comment key={comment._id} comment={comment} />
+                <Comment key={comment._id} comment={comment} currentUserId={user._id} />
             ))}
 
         </div>

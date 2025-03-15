@@ -6,14 +6,6 @@ export default function UserNavigation() {
         <NavLink to="/" className="text-sm font-medium text-white hover:text-gray-300">
           Home
         </NavLink>
-  
-        <NavLink to="/classes" className="text-sm font-medium text-white hover:text-gray-300">
-          Classes
-        </NavLink>
-  
-        <NavLink to="/students" className="text-sm font-medium text-white hover:text-gray-300">
-          Students
-        </NavLink>
 
         <NavLink to="/events" className="text-sm font-medium text-white hover:text-gray-300">
           Events

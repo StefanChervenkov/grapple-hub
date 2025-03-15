@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
+import { put } from "../api/requestApi";
 
-const Comment = ({ comment }) => {
-    const [likes, setLikes] = useState(0);
+const Comment = ({ comment, currentUserId }) => {
+    const [currentComment, setCurrentComment] = useState({...comment, likesCount: comment.likes.length});
 
-    const handleLike = () => {
-        setLikes(likes + 1);
+    const handleLike = async () => {
+        const hasLiked = currentComment.likes.includes(currentUserId);
+        if (hasLiked) {
+            return;o
+        }
+        
+        const updatedComment = await put(`/jsonstore/comments/${currentComment._id}`, {
+            ...currentComment,
+            likes: [...currentComment.likes, currentUserId],
+            likesCount: currentComment.likesCount + 1
+        });
+        setCurrentComment(updatedComment);
     };
 
     const formattedDate =  new Date(comment.createdAt).toLocaleDateString();
@@ -29,7 +40,7 @@ const Comment = ({ comment }) => {
                 onClick={handleLike}
                 className="flex items-center text-gray-600 hover:text-red-500 transition"
             >
-                <Heart className="w-5 h-5 mr-1" /> {likes}
+                <Heart className="w-5 h-5 mr-1" /> {currentComment.likesCount}
             </button>
         </div>
     );
