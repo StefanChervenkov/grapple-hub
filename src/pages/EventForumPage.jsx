@@ -5,7 +5,7 @@ import CommentBox from "../components/CommentBox";
 import Comment from "../components/Comment";
 import { post } from "../api/requestApi";
 import Spinner from "../components/Spinner";
-import { get } from "../api/requestApi";
+import { get, put } from "../api/requestApi";
 
 const EventForumPage = () => {
     const { user } = useAuth();
@@ -55,13 +55,39 @@ const EventForumPage = () => {
                 throw new Error("Failed to post comment.");
             }
 
-            const updatedComments = Object.values(await get(`/jsonstore/comments`)).filter((comment) => comment.eventId === eventId);
-            setComments(updatedComments); 
-
+            setComments([...comments, data]); 
             setIsLoading(false);
+
         } catch (error) {
             setIsLoading(false);
             setError("Failed to post comment.");
+        }
+    };
+
+    const handleLike = async (commentId) => {
+        const commentIndex = comments.findIndex(comment => comment._id === commentId);
+        if (commentIndex === -1) return;
+
+        const currentComment = comments[commentIndex];
+        const hasLiked = currentComment.likes.includes(user._id);
+        if (hasLiked) return;
+
+        const updatedComment = {
+            ...currentComment,
+            likes: [...currentComment.likes, user._id],
+            likesCount: currentComment.likesCount + 1
+        };
+
+        try {
+            const data = await put(`/jsonstore/comments/${commentId}`, updatedComment);
+            if (!data) {
+                throw new Error("Failed to like comment.");
+            }
+            const updatedComments = [...comments];
+            updatedComments[commentIndex] = updatedComment;
+            setComments(updatedComments);
+        } catch (error) {
+            setError("Failed to like comment.");
         }
     };
 
@@ -80,7 +106,7 @@ const EventForumPage = () => {
            {isCommentBoxVisible && <CommentBox postComment={postComment} currentUser={user} />}
 
             {comments.map((comment) => (
-                <Comment key={comment._id} comment={comment} currentUserId={user._id} />
+                <Comment key={comment._id} comment={comment} currentUserId={user._id} handleLike={handleLike} />
             ))}
 
         </div>
