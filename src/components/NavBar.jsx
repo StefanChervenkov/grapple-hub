@@ -12,7 +12,7 @@ const NavBar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <NavLink to="/" className="text-2xl font-bold text-white">
-            BJJ School
+            Grapple Hub
           </NavLink>
 
           {/* Navigation - Ensure horizontal layout */}
