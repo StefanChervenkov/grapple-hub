@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import CommentBox from "../components/CommentBox";
 import Comment from "../components/Comment";
 import { post } from "../api/requestApi";
@@ -102,6 +102,13 @@ const EventForumPage = () => {
             >
                 {isCommentBoxVisible ? "Hide Comment Box" : "+ Add Comment"}
             </button>
+
+            <button>
+                <Link to={`/events/${eventId}/details`} className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition mt-4 mb-4 ml-4">
+                    Event Details
+                </Link>     
+            </button>
+            
 
            {isCommentBoxVisible && <CommentBox postComment={postComment} currentUser={user} />}
 

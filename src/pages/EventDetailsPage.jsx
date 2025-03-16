@@ -32,8 +32,6 @@ export default function EventDetailsPage() {
         }
 
 
-
-
       } catch (error) {
         console.error("Error fetching event:", error);
       } finally {

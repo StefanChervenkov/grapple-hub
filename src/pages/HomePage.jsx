@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     return (
@@ -11,8 +11,8 @@ const HomePage = () => {
                 </p>
 
 
-                <Link to="/events" className="flex items-center space-x-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <Link to="/events" className="text-center">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10">
                         View Events
                     </button>
                 </Link>
