@@ -116,10 +116,13 @@ src/
 
 ### Running the Application
 
-1. Start the SoftUni Praactise server: 
+1. Start the SoftUni Practise server: 
+    ```sh
     cd softuni-practice-server-master
 
     npm run dev
+
+    ```
 
 2. Start the development server:
    ```sh
