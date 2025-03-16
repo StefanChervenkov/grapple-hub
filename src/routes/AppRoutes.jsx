@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 
-import WeeklyCalendar from '../components/WeeklyCalendar';
+
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import StudentsTablePaginated from '../components/StudentsTablePaginated';
+
 import Logout from '../components/Logout';
 import PrivateRoute from '../components/PrivateRoute';
 import EventList from '../components/EventList';
@@ -30,7 +30,6 @@ const AppRoutes = () => {
             <Route path="events/:eventId/applications" element={<PrivateRoute> <EventApplicationsPage /> </PrivateRoute>} />
             <Route path="/events/:eventId/forum" element={<PrivateRoute> <EventForumPage />  </PrivateRoute>} />
             <Route path="/delete" element={<DeleteEventModal />} />
-            <Route path="/students" element={<PrivateRoute> <StudentsTablePaginated /> </PrivateRoute>} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/logout" element={<Logout />} />
